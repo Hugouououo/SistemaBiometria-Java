@@ -1,16 +1,11 @@
-# Script de compilacao para Windows (PowerShell)
-# Pre-requisito: JDK 17+ instalado (javac no PATH)
-
 Write-Host "=== Compilando Sistema de Biometria ===" -ForegroundColor Cyan
 
-# 1. Criar diretorio de saida
 if (Test-Path "bin") {
     Remove-Item -Recurse -Force "bin"
 }
 New-Item -ItemType Directory -Path "bin" | Out-Null
 Write-Host "Pasta 'bin' criada" -ForegroundColor Green
 
-# 2. Compilar todos os arquivos .java
 Write-Host "Compilando arquivos Java..." -ForegroundColor Yellow
 $javaFiles = Get-ChildItem -Path "src" -Recurse -Filter "*.java"
 $javaFilesPath = $javaFiles | ForEach-Object { $_.FullName }
@@ -31,7 +26,6 @@ if ($LASTEXITCODE -eq 0) {
     exit 1
 }
 
-# 3. Executar
 Write-Host "`nIniciando aplicacao..." -ForegroundColor Yellow
 java -cp bin biometria.Main
 
