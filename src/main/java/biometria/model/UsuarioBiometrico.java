@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Representa um usuário cadastrado no sistema de identificação biométrica.
- * Cada usuário possui um vetor de características (template biométrico)
- * extraído da imagem de impressão digital fornecida no cadastro.
- */
 public class UsuarioBiometrico implements Serializable {
 
     private static final long serialVersionUID = 1L;

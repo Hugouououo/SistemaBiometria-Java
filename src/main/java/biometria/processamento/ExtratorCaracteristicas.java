@@ -7,34 +7,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Responsável por ler a imagem biométrica (impressão digital) e extrair
- * um vetor numérico de características (template) que poderá ser
- * comparado posteriormente durante a autenticação.
- *
- * Estratégia utilizada:
- *  1) Conversão da imagem para escala de cinza;
- *  2) Redimensionamento para um tamanho fixo (normalização), garantindo que
- *     imagens de tamanhos diferentes gerem vetores comparáveis;
- *  3) Cálculo de um Histograma de Gradientes Orientados (HOG simplificado),
- *     que captura o padrão de linhas/sulcos da impressão digital — muito
- *     eficaz para esse tipo de biometria, pois é a orientação das cristas
- *     que diferencia uma digital da outra;
- *  4) Normalização final do vetor (norma L2) para tornar a comparação
- *     por similaridade de cosseno robusta a variações de iluminação/contraste.
- */
 public class ExtratorCaracteristicas {
 
     private static final int TAMANHO_NORMALIZADO = 128; // px x px
     private static final int TAMANHO_CELULA = 16;        // célula do HOG
 
-    /**
-     * Extrai o template biométrico a partir do arquivo de imagem informado.
-     *
-     * @param arquivoImagem arquivo de imagem (jpg, png, bmp, etc.)
-     * @return vetor de características (double[])
-     * @throws ProcessamentoBiometricoException se a imagem não puder ser lida ou for inválida
-     */
     public double[] extrair(File arquivoImagem) throws ProcessamentoBiometricoException {
         if (arquivoImagem == null || !arquivoImagem.exists()) {
             throw new ProcessamentoBiometricoException(
@@ -60,7 +37,6 @@ public class ExtratorCaracteristicas {
         return normalizarL2(vetorHog);
     }
 
-    /** Converte a imagem para escala de cinza usando a fórmula de luminância. */
     private BufferedImage converterParaCinza(BufferedImage original) {
         BufferedImage cinza = new BufferedImage(
                 original.getWidth(), original.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -78,7 +54,6 @@ public class ExtratorCaracteristicas {
         return cinza;
     }
 
-    /** Redimensiona a imagem para um tamanho fixo, garantindo vetores comparáveis. */
     private BufferedImage redimensionar(BufferedImage original, int largura, int altura) {
         BufferedImage redimensionada = new BufferedImage(largura, altura, BufferedImage.TYPE_BYTE_GRAY);
         java.awt.Graphics2D g2d = redimensionada.createGraphics();
@@ -89,11 +64,6 @@ public class ExtratorCaracteristicas {
         return redimensionada;
     }
 
-    /**
-     * Calcula um HOG simplificado: divide a imagem em células, calcula o
-     * gradiente (Sobel) de cada pixel e monta um histograma de orientações
-     * por célula. O vetor final é a concatenação de todos os histogramas.
-     */
     private double[] calcularHOG(BufferedImage img) {
         int largura = img.getWidth();
         int altura = img.getHeight();
@@ -140,7 +110,6 @@ public class ExtratorCaracteristicas {
         return vetor;
     }
 
-    /** Normaliza o vetor pela norma euclidiana (L2), evitando divisão por zero. */
     private double[] normalizarL2(double[] vetor) {
         double somaQuadrados = 0.0;
         for (double v : vetor) {

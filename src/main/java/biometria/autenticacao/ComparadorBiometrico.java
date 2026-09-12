@@ -1,19 +1,7 @@
 package biometria.autenticacao;
 
-/**
- * Responsável por calcular o grau de similaridade entre dois templates
- * biométricos (vetores de características), utilizando a similaridade
- * de cosseno — métrica amplamente usada em reconhecimento de padrões
- * pois é invariante à magnitude do vetor, apenas à sua orientação.
- */
 public class ComparadorBiometrico {
 
-    /**
-     * Calcula a similaridade de cosseno entre dois vetores.
-     * Resultado varia de -1 (totalmente diferentes) a 1 (idênticos).
-     * Como os vetores já vêm normalizados (L2) do extrator, o resultado
-     * prático fica entre 0 e 1 para este domínio.
-     */
     public double calcularSimilaridade(double[] templateA, double[] templateB) {
         if (templateA == null || templateB == null) {
             throw new IllegalArgumentException("Templates não podem ser nulos.");

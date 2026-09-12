@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Registra o resultado de uma tentativa de autenticação/identificação,
- * usado para geração dos relatórios adicionais do sistema.
- */
+
 public class TentativaAutenticacao implements Serializable {
 
     private static final long serialVersionUID = 1L;

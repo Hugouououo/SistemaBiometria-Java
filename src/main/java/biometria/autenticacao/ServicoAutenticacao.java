@@ -13,11 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * Serviço central da aplicação: orquestra o cadastro de novos usuários
- * (extração + persistência do template) e a autenticação/identificação
- * de uma nova imagem biométrica em relação à base cadastrada.
- */
 public class ServicoAutenticacao {
 
     /** Limiar mínimo de similaridade para considerar uma autenticação válida. */
@@ -35,9 +30,6 @@ public class ServicoAutenticacao {
         this.registradorLog = new RegistradorLog();
     }
 
-    /**
-     * Cadastra um novo usuário extraindo o template a partir da imagem informada.
-     */
     public UsuarioBiometrico cadastrar(String nomeCompleto, String matricula, File imagem)
             throws ProcessamentoBiometricoException, IOException {
 
@@ -58,10 +50,6 @@ public class ServicoAutenticacao {
         return usuario;
     }
 
-    /**
-     * Realiza a IDENTIFICAÇÃO 1:N — compara a imagem informada contra toda a
-     * base cadastrada e retorna o usuário mais similar, se acima do limiar.
-     */
     public ResultadoIdentificacao identificar(File imagem) throws ProcessamentoBiometricoException {
         double[] templateEntrada;
         try {
@@ -101,10 +89,6 @@ public class ServicoAutenticacao {
         return new ResultadoIdentificacao(sucesso, melhorCandidato, melhorScore);
     }
 
-    /**
-     * Realiza a AUTENTICAÇÃO 1:1 — compara a imagem informada contra o
-     * template de um usuário específico (verificação de identidade alegada).
-     */
     public ResultadoIdentificacao autenticar(String idUsuario, File imagem) throws ProcessamentoBiometricoException {
         Optional<UsuarioBiometrico> usuarioOpt = repositorio.buscarPorId(idUsuario);
         if (!usuarioOpt.isPresent()) {

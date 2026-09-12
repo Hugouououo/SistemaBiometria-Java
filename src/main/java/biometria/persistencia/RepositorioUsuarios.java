@@ -7,11 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Responsável pela persistência dos usuários cadastrados no sistema.
- * Utiliza serialização de objetos Java para gravar/ler a base de dados
- * em um arquivo local, dispensando a necessidade de um SGBD externo.
- */
 public class RepositorioUsuarios {
 
     private static final String ARQUIVO_BASE = "dados/cadastros/base_usuarios.dat";
