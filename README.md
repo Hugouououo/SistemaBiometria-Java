@@ -1,8 +1,9 @@
 # Sistema de Identificação e Autenticação Biométrica
 
-Projeto acadêmico desenvolvido em **Java** conforme especificação:
+Projeto acadêmico desenvolvido em Java para a APS do 6º Semestre da UNIP
+
 ferramenta de identificação e autenticação biométrica, com objeto de
-análise obtido diretamente de **arquivos de imagem** (impressão digital).
+análise obtido diretamente de **arquivos de imagem**.
 
 ## Como compilar e executar
 
@@ -55,6 +56,8 @@ java -cp bin biometria.Main
 subpastas `cadastros/` e `logs/`) no diretório de execução, usada para
 persistir a base de usuários e o histórico de autenticações.
 
+---
+
 ## Guia de uso da interface gráfica
 
 A aplicação abre com uma janela em abas. Cada aba tem uma função:
@@ -63,7 +66,7 @@ A aplicação abre com uma janela em abas. Cada aba tem uma função:
    - Preencha **Nome Completo** (ex: "João da Silva")
    - Preencha **Matrícula / ID** (ex: "2023001")
    - Clique em "Selecionar imagem biométrica..." e escolha uma imagem
-     (jpg, png, bmp) contendo uma impressão digital ou padrão visual
+     (jpg, png, bmp).
    - Uma prévia da imagem aparece à direita
    - Clique em "Cadastrar Usuário"
    - O usuário aparece no histórico de status, com um ID único gerado
@@ -94,21 +97,12 @@ A aplicação abre com uma janela em abas. Cada aba tem uma função:
    - **"Exportar Relatório Atual (.txt)"**: salva o relatório visível
      em um arquivo de texto para impressão ou envio
 
-## Objeto biométrico escolhido
-
-**Impressão digital**, obtida a partir de arquivos de imagem (jpg,
-jpeg, png, bmp) selecionados pelo usuário — sem necessidade de scanner
-físico, conforme permitido pelo enunciado ("obtido diretamente através
-de arquivos de imagem ou vídeo").
-
 ## Como funciona (visão técnica)
 
 1. **Extração de características** (`ExtratorCaracteristicas`):
    a imagem é convertida para escala de cinza, normalizada para um
    tamanho fixo (128x128) e processada com um **Histograma de
-   Gradientes Orientados (HOG)** — técnica que captura a orientação
-   dos sulcos/linhas da digital, que é justamente o que diferencia uma
-   impressão digital de outra. O resultado é um vetor numérico
+   Gradientes Orientados (HOG)**. O resultado é um vetor numérico
    (template biométrico) normalizado.
 
 2. **Comparação** (`ComparadorBiometrico`): dois templates são
@@ -170,10 +164,3 @@ src/main/java/biometria/
   com mensagens amigáveis ao usuário via `JOptionPane`.
 - Recuperação segura caso a base de dados esteja ausente ou corrompida
   (inicia com base vazia e avisa no console, em vez de travar).
-
-## Possíveis extensões futuras
-
-- Suporte a múltiplas imagens por usuário (aumenta robustez do template).
-- Outros tipos de biometria (íris, face) reaproveitando a mesma
-  arquitetura, bastando trocar o extrator de características.
-- Exportação da base para banco de dados relacional (JDBC).
